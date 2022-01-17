@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8850aee6130162a43a8490174a902e7a, type: 3}
+  m_Name: MeatOnBone
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3275260760414511380, guid: 24733502670dbc04180e968a0ad523b1, type: 3}
+  type: 5
+  rank: 70
+  craftingResource: 0
+  description: The most famous adventurer food. A huge chunk of meat right on the
+    bone!
+  dropQuantity: 3
+  manaRecovery: 20
