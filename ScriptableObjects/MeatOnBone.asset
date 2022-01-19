@@ -18,5 +18,5 @@ MonoBehaviour:
   craftingResource: 0
   description: The most famous adventurer food. A huge chunk of meat right on the
     bone!
-  dropQuantity: 3
+  dropQuantity: 1
   manaRecovery: 20

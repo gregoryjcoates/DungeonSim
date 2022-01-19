@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ItemGrid : MonoBehaviour
 {
     [SerializeField]
-    int numberItems = 30;
+    int ItemGridSize = 30;
     [SerializeField]
     private GameObject slot;
-
-    GameObject player;
+    [SerializeField]
+    private GameObject itemInSlot;
+    [SerializeField]
+    private InventoryObject inventory;
 
     public List<GameObject> itemSlots = new List<GameObject>();
 
-    public EventAddItem iAdd;
     
 
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        iAdd = new EventAddItem();
-        iAdd.AddListener(addToSlot);
-        for (int i = 0; i < numberItems; i++)
+        
+        // creates empty itemslots
+        for (int i = 0; i < ItemGridSize; i++)
         {
             
            GameObject itemSlot = Instantiate(slot, gameObject.transform);
@@ -34,12 +34,30 @@ public class ItemGrid : MonoBehaviour
         
 
     }
+    // when ui is brought up it updates it
+    private void OnEnable()
+    {
+        for (int i = 0; i < inventory.GetSlotCount(); i++)
+        {
+            var item = inventory.GetItemInSlot(i);
+            addToSlot(i, item.Item1, item.Item2);
+        }
+    }
+
 
     private void addToSlot(int slot, int quantity, ItemObject item)
     {
-        Debug.Log("add slot event??");
-        // different method needed
-        //itemSlots[slot].GetComponentInChildren<Image>().image = item.prefab.GetComponent<SpriteRenderer>().sprite.texture;
+        Debug.Log("add to slot is called");
+
+        // make child object of item slot
+        // itemSlots[slot].
+        // does not work...GameObject newItem = Instantiate(item.prefab,itemSlots[slot].transform, false);
+        GameObject newItem = Instantiate(itemInSlot,itemSlots[slot].transform);
+        newItem.GetComponent<UnityEngine.UI.Image>().sprite = item.prefab.GetComponent<SpriteRenderer>().sprite;
+
+        newItem.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
+
+
     }
 
 }

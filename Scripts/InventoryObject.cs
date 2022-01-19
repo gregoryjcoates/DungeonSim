@@ -5,18 +5,18 @@ using UnityEngine.Events;
 
 
 
-
-public class EventAddItem : UnityEvent<int, int, ItemObject>
-{
-    
-}
-
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 
 public class InventoryObject : ScriptableObject
 {
+    [SerializeField]
+    private List<InventorySlot> slotList = new List<InventorySlot>();
 
-    public List<InventorySlot> slotList = new List<InventorySlot>();
+    public int GetSlotCount()
+    {
+        return slotList.Count;
+    }
 
 
     // adds item and item slot if needed
@@ -60,6 +60,13 @@ public class InventoryObject : ScriptableObject
             }
 
         }
+    }
+
+
+    // get item in slot
+    public (int, ItemObject) GetItemInSlot(int slot)
+    {
+        return (slotList[slot].quantity, slotList[slot].item);
     }
 }
 

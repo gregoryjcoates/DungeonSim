@@ -358,6 +358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 83388338}
+  - component: {fileID: 83388339}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -379,6 +380,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &83388339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83388337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe889ef2c7aeed244bae498e192fa2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &138247593
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,8 +504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e137691beada5a34facb352d23013f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberItems: 30
+  ItemGridSize: 30
   slot: {fileID: 7228421195407238228, guid: 017ddd856d7bb654899d03fb0c1cba70, type: 3}
+  inventory: {fileID: 11400000, guid: 0399adaea7436174887e8d81fd228682, type: 2}
   itemSlots: []
 --- !u!1 &608729607
 GameObject:
@@ -1727,6 +1741,8 @@ MonoBehaviour:
   manaMax: 1
   manaCurrent: 1
   dir: 0
+  playerInventory: {fileID: 11400000, guid: 0399adaea7436174887e8d81fd228682, type: 2}
+  playerMenu: {fileID: 809083115}
   currentItem: {fileID: 11400000, guid: b27dc7954dbefae498f18f27c50c7ddf, type: 2}
 --- !u!50 &1504269750
 Rigidbody2D:
@@ -27984,6 +28000,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeatOnBone
       objectReference: {fileID: 0}
+    - target: {fileID: 3275260760414511380, guid: 24733502670dbc04180e968a0ad523b1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4842928843745996114, guid: 24733502670dbc04180e968a0ad523b1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28038,6 +28059,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6233720772980517638, guid: 24733502670dbc04180e968a0ad523b1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24733502670dbc04180e968a0ad523b1, type: 3}

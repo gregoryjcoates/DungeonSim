@@ -31,10 +31,18 @@ public class PlayerController : MonoBehaviour
     CameraFollow cameraSystem;
 
     // Inventory system
-    PlayerInventory inventorySystem;
+    [SerializeField]
+    public InventoryObject playerInventory;
+
+    //item pickup
+    ItemPickup itemPkUP;
 
     // event system
     PlayerEventManager eventSystem;
+
+    // get reference to player menu
+    [SerializeField]
+    GameObject playerMenu;
 
     [SerializeField]
     ItemObject currentItem;
@@ -71,10 +79,10 @@ public class PlayerController : MonoBehaviour
         // set camera target
         cameraSystem.ObjectToFollow(gameObject);
 
-        // player inventory system
-        inventorySystem = gameObject.AddComponent<PlayerInventory>() as PlayerInventory;
+        // attach pickup script
+        itemPkUP = gameObject.AddComponent<ItemPickup>();
 
-        // attact mining sytem
+        // attact=h mining sytem
         mine = gameObject.AddComponent<Mine>() as Mine;
 
         // tool action tile target system

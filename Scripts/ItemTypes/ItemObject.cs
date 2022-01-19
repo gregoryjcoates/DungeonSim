@@ -11,7 +11,8 @@ public enum ItemType
     Feed,
     Trap,
     PlayerFood,
-    Cosmetic
+    Cosmetic,
+    Empty
 }
 
 public abstract class ItemObject : ScriptableObject
