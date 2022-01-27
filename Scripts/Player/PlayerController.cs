@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     protected float manaMax = 1f;
     [SerializeField]
     protected float manaCurrent = 1f;
-
+    [SerializeField]
+    protected int playerInventorySize = 30;
 
     // player rigid body
     Rigidbody2D rb;
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
     // Inventory system
     [SerializeField]
     public InventoryObject playerInventory;
+    [SerializeField]
+    ItemObject emptyObject;
 
     //item pickup
     ItemPickup itemPkUP;
@@ -43,6 +46,10 @@ public class PlayerController : MonoBehaviour
     // get reference to player menu
     [SerializeField]
     GameObject playerMenu;
+
+    // get reference to toolbar itemgrid script
+    [SerializeField]
+    ItemGrid toolbar;
 
     [SerializeField]
     ItemObject currentItem;
@@ -90,6 +97,8 @@ public class PlayerController : MonoBehaviour
 
         // player event manager
         eventSystem = gameObject.AddComponent<PlayerEventManager>() as PlayerEventManager;
+
+        playerInventory.EmptySlots(playerInventorySize, emptyObject);
     }
 
     // Update is called once per frame
@@ -101,12 +110,15 @@ public class PlayerController : MonoBehaviour
         rb.velocity = movementSystem.Move(rb, movementSpeed, horizontalSpeed, verticalSpeed );
         dir = direction.DirectionFacing(rb.velocity.x, rb.velocity.y);
 
+        
+
         if (currentItem.type == ItemType.Tool)
         {
             currentTool = (ToolItemObject)currentItem;
         }
 
         Action();
+        ToolBarSelection();
       
     }
 
@@ -123,5 +135,57 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    // selections toolbar slot
+    [Range(0,9)]
+    int itemSelection = 0;
+
+    // controls toolbar slot selection
+    private void ToolBarSelection()
+    {
+        // moves left
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            if (itemSelection == 0)
+            {
+                itemSelection = 9;
+            }
+            else
+            {
+                itemSelection -= 1;
+            }
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0) 
+        {
+            // moves right
+            if (itemSelection == 9)
+            {
+                itemSelection = 0;
+            }
+            else
+            {
+                itemSelection += 1;
+            }
+        }
+
+        toolbar.ItemSelected(itemSelection);
+        CurrentItem(itemSelection);
+    }
+
+    // passes selected item data
+    private void CurrentItem(int selectedSlot)
+    {
+        ItemObject currItem = null;
+        int itemQuantity = 0;
+
+        var item = playerInventory.GetItemInSlot(selectedSlot);
+        itemQuantity = item.Item1;
+        currItem = item.Item2;
+        
+
+
+        Debug.Log("Current item is: " + currItem.name);
     }
 }

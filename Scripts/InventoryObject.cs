@@ -19,6 +19,17 @@ public class InventoryObject : ScriptableObject
     }
 
 
+    public void EmptySlots(int invSize, ItemObject item)
+    {
+        for (int i = slotList.Count; i < invSize; i++)
+        {
+
+
+                    slotList.Add(new InventorySlot(item, 1));
+                
+            
+        }
+    }
     // adds item and item slot if needed
     public void AddItem(ItemObject _item, int _quantity)
     {

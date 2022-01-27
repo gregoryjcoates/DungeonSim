@@ -16,5 +16,5 @@ MonoBehaviour:
   type: 7
   rank: 0
   craftingResource: 0
-  description: 
+  description: empty object for empty slots
   dropQuantity: 0
