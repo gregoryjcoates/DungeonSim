@@ -57,7 +57,7 @@ public class ItemGrid : MonoBehaviour
         
         for (int i = 0; i < inventory.GetSlotCount(); i++)
         {
-            if (i > ItemsToDisplay)
+            if (i > ItemsToDisplay-1)
             {
                 break;
             }

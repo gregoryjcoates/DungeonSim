@@ -16,6 +16,8 @@ public class ItemPickup : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+
+
         var item = other.GetComponent<Item>();
         if (item == true)
         {

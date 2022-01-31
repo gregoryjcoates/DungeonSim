@@ -52,15 +52,9 @@ public class PlayerController : MonoBehaviour
     ItemGrid toolbar;
 
     [SerializeField]
-    ItemObject currentItem;
-    TrapItemObject currentTrap;
-    ToolItemObject currentTool;
-    LootItemObject currentLoot;
-    FeedItemObject currentFeed;
-    CosmeticItemObject currentCosmetic;
-    ArtifactItemObject currentArtifact;
+    private GameObject heldItem;
 
-
+    ItemObject previousItem;
 
 
 
@@ -99,6 +93,8 @@ public class PlayerController : MonoBehaviour
         eventSystem = gameObject.AddComponent<PlayerEventManager>() as PlayerEventManager;
 
         playerInventory.EmptySlots(playerInventorySize, emptyObject);
+        // default value for previous item
+        previousItem = emptyObject;
     }
 
     // Update is called once per frame
@@ -112,30 +108,26 @@ public class PlayerController : MonoBehaviour
 
         
 
-        if (currentItem.type == ItemType.Tool)
-        {
-            currentTool = (ToolItemObject)currentItem;
-        }
 
-        Action();
+       // Action();
         ToolBarSelection();
       
     }
 
-    private void Action()
-    {
-        if (Input.GetKeyDown("x") == true)
-        {
-            if (currentItem.type == ItemType.Tool)
-            {
-                if (currentTool.toolType == ToolItemObject.ToolType.Pickaxe)
-                {
-                    tileTarg.targetTile(dir, currentTool.toolRange);
-                    mine.MineAction(currentTool.toolRange, currentTool.toolPower, currentTool.rank, dir);
-                }
-            }
-        }
-    }
+    //private void Action()
+    //{
+    //    if (Input.GetKeyDown("x") == true)
+    //    {
+    //        if (currentItem.type == ItemType.Tool)
+    //        {
+    //            if (currentTool.toolType == ToolItemObject.ToolType.Pickaxe)
+    //            {
+    //                tileTarg.targetTile(dir, currentTool.toolRange);
+    //                mine.MineAction(currentTool.toolRange, currentTool.toolPower, currentTool.rank, dir);
+    //            }
+    //        }
+    //    }
+    //}
 
 
     // selections toolbar slot
@@ -174,7 +166,7 @@ public class PlayerController : MonoBehaviour
         CurrentItem(itemSelection);
     }
 
-    // passes selected item data
+    // passes selected item data to ui
     private void CurrentItem(int selectedSlot)
     {
         ItemObject currItem = null;
@@ -183,9 +175,38 @@ public class PlayerController : MonoBehaviour
         var item = playerInventory.GetItemInSlot(selectedSlot);
         itemQuantity = item.Item1;
         currItem = item.Item2;
-        
 
 
+        ItemActions(currItem);
         Debug.Log("Current item is: " + currItem.name);
+    }
+
+    // allows actions based on current item
+    void ItemActions(ItemObject currItem)
+    {
+
+
+        if (currItem != previousItem)
+        {
+            
+            if (currItem != emptyObject)
+            {
+                previousItem = currItem;
+                Debug.Log("change current item");
+              //  Destroy(heldItem);
+                heldItem = Instantiate(currItem.prefab, gameObject.transform, false);
+                heldItem.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            }
+
+        }
+
+        if (currItem.type == ItemType.Tool)
+        {
+            ToolItemObject currTool = currItem as ToolItemObject;
+            if (currTool.toolType == ToolItemObject.ToolType.Pickaxe)
+            {
+
+            }
+        }
     }
 }

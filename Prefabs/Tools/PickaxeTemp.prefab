@@ -95,3 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da571ba9ba4fbd4f94cf0c11a4f712d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mine:
+    m_PersistentCalls:
+      m_Calls: []
+  mineItem:
+    m_PersistentCalls:
+      m_Calls: []
