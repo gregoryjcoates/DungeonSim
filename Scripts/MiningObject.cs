@@ -10,27 +10,47 @@ public class MiningObject : ScriptableObject
     [SerializeField]
     private int toolRankReq;
     [SerializeField]
-    private GameObject lootDrop;
-    [SerializeField]
     private int hitsReq;
     [SerializeField]
     private GameObject prefab;
+    // test
+    [SerializeField]
+    private List<GameObject> loot;
+    [SerializeField]
+    private List<int> lootWeights;
 
-    public void Mine(ToolItemObject tool)
+    
+
+  
+
+    public int Mine(int power, int rank)
     {
-        if (tool.toolType == ToolItemObject.ToolType.Pickaxe)
+        
+        if (rank >= toolRankReq)
         {
-            
-            if (tool.rank >= toolRankReq)
-            {
-                hitsReq -= tool.toolPower;
+            hitsReq -= power;
 
-                if (hitsReq <= 0)
-                {
-                    Instantiate(lootDrop);
-                    Destroy(prefab);
-                }
+            if (hitsReq <= 0)
+            {
+                // it dead
+                return 0;
+            }
+            else
+            {
+                // was hit but still alive
+                return 1;
             }
         }
+        else
+        {
+            // tool fails to work
+            return -1;
+        }
+    }
+
+    public GameObject GetDrop()
+    {
+        return DropTable.DropLoot(loot, lootWeights);
     }
 }
+

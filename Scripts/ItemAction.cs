@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mining : MonoBehaviour
+
+// based on type of 
+public class ItemAction : MonoBehaviour
 {
-    public MiningObject miningObject;
+ 
 }

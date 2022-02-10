@@ -7,8 +7,6 @@ using UnityEngine.Tilemaps;
 public class Mine : MonoBehaviour
 {
 
-    [SerializeField]
-    private UnityEvent mine;
     ContactFilter2D filter;
 
     GameObject tileMap;
@@ -24,10 +22,12 @@ public class Mine : MonoBehaviour
         filter.NoFilter();
     }
 
-    public void MineAction(int range, int power, int rank, FacingDirection.Direction dir)
+    public void MineAction(int range, int power, int rank, FacingDirection.Direction dir, Vector3 playerPosition)
     {
+        Debug.Log("mine action is called");
+
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
-        Vector3 position = (tMap.WorldToCell(new Vector3(Mathf.Round(gameObject.transform.position.x), Mathf.Round(gameObject.transform.position.y), 0)));
+        Vector3 position = (tMap.WorldToCell(new Vector3(Mathf.Round(playerPosition.x), Mathf.Round(playerPosition.y), 0)));
 
         if (dir == FacingDirection.Direction.Up)
         {
@@ -36,9 +36,24 @@ public class Mine : MonoBehaviour
 
             foreach (RaycastHit2D thingy in hits)
             {
-                Debug.Log("did this work?");
-                GameObject a = thingy.collider.gameObject;
-                mineItem.Invoke();
+
+
+                GameObject thingHit = thingy.transform.gameObject;
+
+                if (thingHit.tag == "MineAble")
+                {
+                    if (thingHit.GetComponent<MineableObject>().instance.Mine(power, rank) == 0)
+                    {
+                        GameObject drop = thingHit.GetComponent<MineableObject>().instance.GetDrop();
+                        if (drop != null)
+                        {
+                            Instantiate(drop, thingHit.transform.position, Quaternion.identity);
+                        }
+
+                        Destroy(thingHit);
+                    } 
+                }
+
             }
             
         }

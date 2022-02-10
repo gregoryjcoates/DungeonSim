@@ -1668,35 +1668,20 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7131136254132494862, guid: 2b81f58b33e513142a1613e502ee9275,
-        type: 3}
-      propertyPath: mineItem.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131136254132494862, guid: 2b81f58b33e513142a1613e502ee9275,
-        type: 3}
-      propertyPath: mineItem.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131136254132494862, guid: 2b81f58b33e513142a1613e502ee9275,
-        type: 3}
-      propertyPath: mineItem.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7505325968241399274, guid: 2b81f58b33e513142a1613e502ee9275,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 7.7059546
       objectReference: {fileID: 0}
     - target: {fileID: 7505325968241399274, guid: 2b81f58b33e513142a1613e502ee9275,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 0.007561782
       objectReference: {fileID: 0}
     - target: {fileID: 7505325968241399274, guid: 2b81f58b33e513142a1613e502ee9275,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.94039994
       objectReference: {fileID: 0}
     - target: {fileID: 7505325968241399274, guid: 2b81f58b33e513142a1613e502ee9275,
         type: 3}
@@ -1865,7 +1850,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1905205435}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1412444202
+--- !u!58 &1412444205
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412444201}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &1412444206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1874,10 +1875,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1412444201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba8758125ab6eb64198a6a76ceef6b11, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ba3661e51e1c48499f68a6d30ae70f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miningObject: {fileID: 11400000, guid: a9852723e52e9dd4280b747c82e7a61a, type: 2}
+  mineOb: {fileID: 11400000, guid: a9852723e52e9dd4280b747c82e7a61a, type: 2}
+  instance: {fileID: 0}
 --- !u!1 &1454447869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1956,6 +1958,7 @@ GameObject:
   - component: {fileID: 1504269750}
   - component: {fileID: 1504269749}
   - component: {fileID: 1504269752}
+  - component: {fileID: 1504269753}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1985,6 +1988,9 @@ MonoBehaviour:
   playerMenu: {fileID: 809083115}
   toolbar: {fileID: 991490548}
   heldItem: {fileID: 0}
+  heldItemSortOrder: 10
+  currItem: {fileID: 0}
+  currTool: {fileID: 0}
 --- !u!50 &1504269750
 Rigidbody2D:
   serializedVersion: 4
@@ -2037,6 +2043,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1504269753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504269748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f612322e41c16468ff3955b65cc250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPrefab: {fileID: 8362793890583368544, guid: f3ce32fbfb05a3a47bb51699e787d2b1,
+    type: 3}
 --- !u!1 &1557776010
 GameObject:
   m_ObjectHideFlags: 0

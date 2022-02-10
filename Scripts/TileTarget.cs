@@ -12,12 +12,13 @@ public class TileTarget : MonoBehaviour
 
     private Vector3 tileLocation;
 
+    private List<GameObject> tiles = new List<GameObject>();
+
     private void Start()
     {
-        targetPrefab = Resources.Load<GameObject>("TileTarget");
+        
         tileMap = GameObject.Find("Tilemap");
         tMap = tileMap.GetComponent<Tilemap>();
-
     }
 
     public void targetTile(FacingDirection.Direction dir, int range)
@@ -30,8 +31,7 @@ public class TileTarget : MonoBehaviour
             for (int i = 1; i <= range; i++)
             {
                 tileLocation = (tMap.WorldToCell(new Vector3(Mathf.Round(gameObject.transform.position.x), Mathf.Round(gameObject.transform.position.y) + i, 0)));
-                Instantiate(targetPrefab, tileLocation, Quaternion.identity);
-
+                AddTile();
 
             }
         }
@@ -40,7 +40,7 @@ public class TileTarget : MonoBehaviour
             for (int i = 1; i <= range; i++)
             {
                 tileLocation = (tMap.WorldToCell(new Vector3(Mathf.Round(gameObject.transform.position.x) + i, Mathf.Round(gameObject.transform.position.y), 0)));
-                Instantiate(targetPrefab, tileLocation , Quaternion.identity);
+                AddTile();
 
             }
         }
@@ -49,7 +49,7 @@ public class TileTarget : MonoBehaviour
             for (int i = 1; i <= range; i++)
             {
                 tileLocation = (tMap.WorldToCell(new Vector3(Mathf.Round(gameObject.transform.position.x), Mathf.Round(gameObject.transform.position.y) - i, 0)));
-                Instantiate(targetPrefab, tileLocation, Quaternion.identity);
+                AddTile();
 
             }
         }
@@ -58,11 +58,30 @@ public class TileTarget : MonoBehaviour
             for (int i = 1; i <= range; i++)
             {
                 tileLocation = (tMap.WorldToCell(new Vector3(Mathf.Round(gameObject.transform.position.x) - i, Mathf.Round(gameObject.transform.position.y), 0)));
-                Instantiate(targetPrefab, tileLocation, Quaternion.identity);
+                AddTile();
 
             }
         }
 
     }
 
+    private void AddTile()
+    {
+
+            GameObject tile = Instantiate(targetPrefab, tileLocation, Quaternion.identity);
+            tiles.Add(tile);
+        
+    }
+
+    public void RemoveTiles()
+    {
+        if (tiles.Count != 0)
+        {
+            foreach (GameObject tile in tiles)
+            {
+                Destroy(tile);
+            }
+            tiles.Clear();
+        }
+    }
 }

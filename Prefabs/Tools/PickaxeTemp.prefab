@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7505325968241399274}
   - component: {fileID: 5464734384654721695}
-  - component: {fileID: 7131136254132494862}
+  - component: {fileID: 4346292833589028960}
+  - component: {fileID: -5588356536006572039}
   m_Layer: 0
   m_Name: PickaxeTemp
   m_TagString: Untagged
@@ -83,7 +84,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7131136254132494862
+--- !u!114 &4346292833589028960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421894099059180561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fad2c5432570fe458e8aeffa33ff259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5588356536006572039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

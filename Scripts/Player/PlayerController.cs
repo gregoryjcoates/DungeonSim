@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+
     // player attributes
     [SerializeField]
     protected float movementSpeed = 1f;
@@ -25,8 +26,6 @@ public class PlayerController : MonoBehaviour
     FacingDirection direction;
     public FacingDirection.Direction dir;
 
-    // target system
-    TileTarget tileTarg;
 
     // camera script
     CameraFollow cameraSystem;
@@ -53,14 +52,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject heldItem;
-
+    [SerializeField]
+    private int heldItemSortOrder = 10;
+    [SerializeField]
+    ItemObject currItem;
     ItemObject previousItem;
 
+    [SerializeField]
+    ToolItemObject currTool;
 
-
-
-    // mining system
-    Mine mine;
 
     // Start is called before the first frame update
     void Start()
@@ -83,11 +83,7 @@ public class PlayerController : MonoBehaviour
         // attach pickup script
         itemPkUP = gameObject.AddComponent<ItemPickup>();
 
-        // attact=h mining sytem
-        mine = gameObject.AddComponent<Mine>() as Mine;
 
-        // tool action tile target system
-        tileTarg = gameObject.AddComponent<TileTarget>() as TileTarget;
 
         // player event manager
         eventSystem = gameObject.AddComponent<PlayerEventManager>() as PlayerEventManager;
@@ -103,35 +99,47 @@ public class PlayerController : MonoBehaviour
         // 
         float horizontalSpeed = Input.GetAxisRaw("Horizontal");
         float verticalSpeed = Input.GetAxisRaw("Vertical");
-        rb.velocity = movementSystem.Move(rb, movementSpeed, horizontalSpeed, verticalSpeed );
+        rb.velocity = movementSystem.Move(rb, movementSpeed, horizontalSpeed, verticalSpeed);
         dir = direction.DirectionFacing(rb.velocity.x, rb.velocity.y);
 
-        
 
 
-       // Action();
+
+         Action();
         ToolBarSelection();
-      
+
     }
 
-    //private void Action()
-    //{
-    //    if (Input.GetKeyDown("x") == true)
-    //    {
-    //        if (currentItem.type == ItemType.Tool)
-    //        {
-    //            if (currentTool.toolType == ToolItemObject.ToolType.Pickaxe)
-    //            {
-    //                tileTarg.targetTile(dir, currentTool.toolRange);
-    //                mine.MineAction(currentTool.toolRange, currentTool.toolPower, currentTool.rank, dir);
-    //            }
-    //        }
-    //    }
-    //}
+    private void Action()
+    {
+        if (Input.GetKeyDown("x") == true)
+        {
+            if (heldItem != null)
+            {
+                if (currTool != null)
+                {
+                    GetComponent<TileTarget>().targetTile(dir, currTool.toolRange);
+                    heldItem.GetComponent<ToolAction>().Action(currTool.toolType, currTool.toolRange, currTool.toolPower, currTool.rank, dir, gameObject.transform.position);
+                }
+            }
+        }
+
+        if (Input.GetKeyUp("x") == true)
+        {
+            if (heldItem !=null)
+            {
+                if (currTool !=null)
+                {
+                    GetComponent<TileTarget>().RemoveTiles();
+                }
+                
+            }
+        }
+    }
 
 
     // selections toolbar slot
-    [Range(0,9)]
+    [Range(0, 9)]
     int itemSelection = 0;
 
     // controls toolbar slot selection
@@ -149,7 +157,7 @@ public class PlayerController : MonoBehaviour
                 itemSelection -= 1;
             }
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") > 0) 
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             // moves right
             if (itemSelection == 9)
@@ -169,7 +177,7 @@ public class PlayerController : MonoBehaviour
     // passes selected item data to ui
     private void CurrentItem(int selectedSlot)
     {
-        ItemObject currItem = null;
+        //ItemObject currItem = null;
         int itemQuantity = 0;
 
         var item = playerInventory.GetItemInSlot(selectedSlot);
@@ -177,36 +185,49 @@ public class PlayerController : MonoBehaviour
         currItem = item.Item2;
 
 
-        ItemActions(currItem);
+        HeldItemSpawning(currItem);
         Debug.Log("Current item is: " + currItem.name);
     }
 
     // allows actions based on current item
-    void ItemActions(ItemObject currItem)
+    private void HeldItemSpawning(ItemObject currItem)
     {
 
-
+        // checks if the current item is still the same
         if (currItem != previousItem)
         {
-            
-            if (currItem != emptyObject)
+            Destroy(heldItem);
+
+            previousItem = currItem;
+
+            // if the current item is a tool spawn it in player's hands
+            if (currItem.type == ItemType.Tool)
             {
-                previousItem = currItem;
-                Debug.Log("change current item");
-              //  Destroy(heldItem);
-                heldItem = Instantiate(currItem.prefab, gameObject.transform, false);
-                heldItem.GetComponent<SpriteRenderer>().sortingOrder = 5;
+                currTool = currItem as ToolItemObject;
+                HeldToolSpawn(currTool);
             }
+            // if the item is not a tool make sure currTool is null
+            else
+            {
+                currTool = null;
+            }
+            //  Destroy(heldItem);
+            // heldItem = Instantiate(currItem.prefab, gameObject.transform, false);
+            //  heldItem.GetComponent<SpriteRenderer>().sortingOrder = 5;
+
 
         }
 
-        if (currItem.type == ItemType.Tool)
-        {
-            ToolItemObject currTool = currItem as ToolItemObject;
-            if (currTool.toolType == ToolItemObject.ToolType.Pickaxe)
-            {
 
-            }
-        }
+    }
+
+
+    private void HeldToolSpawn(ToolItemObject currTool)
+    {
+        heldItem = Instantiate(currTool.prefab, gameObject.transform, false);
+        heldItem.name = "HeldItem";
+        heldItem.GetComponent<SpriteRenderer>().sortingOrder = heldItemSortOrder;
+        heldItem.transform.localPosition = new Vector3(0, 1, 0);
+        Destroy(heldItem.GetComponent<CircleCollider2D>());
     }
 }

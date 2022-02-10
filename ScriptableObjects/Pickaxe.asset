@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1421894099059180561, guid: 2b81f58b33e513142a1613e502ee9275, type: 3}
   type: 2
-  rank: 0
+  rank: 1
   craftingResource: 0
   description: 
   dropQuantity: 1
   function: {fileID: 0}
   toolType: 2
   toolPower: 1
-  toolRange: 3
+  toolRange: 2

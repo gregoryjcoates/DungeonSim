@@ -108,7 +108,7 @@ public class ItemGrid : MonoBehaviour
         previousSelected = itemSelected;
 
         slot.GetComponent<UnityEngine.UI.Image>().sprite = selected;
-        Debug.Log("Slot color changed");
+       // Debug.Log("Slot color changed");
     }
 
 }

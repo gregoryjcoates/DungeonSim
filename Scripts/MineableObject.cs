@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class MineableObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private MiningObject mineOb;
+    public MiningObject instance;
+
+    private void Awake()
     {
-        
+        instance = Instantiate(mineOb);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
