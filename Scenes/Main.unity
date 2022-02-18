@@ -512,7 +512,7 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 0399adaea7436174887e8d81fd228682, type: 2}
   selected: {fileID: 0}
   unselected: {fileID: 0}
-  itemSelectedDefault: 0
+  itemSelectedDefault: 1
   emptyObject: {fileID: 11400000, guid: a411b0ac3bf45e24cbe794a7f19c079b, type: 2}
   itemSlots: []
 --- !u!1 &608729607

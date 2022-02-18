@@ -46,10 +46,7 @@ public class ItemGrid : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        ItemSelected(itemSelectedDefault);
-    }
+
 
     // when ui is brought up it updates it
     private void OnEnable()
@@ -61,30 +58,54 @@ public class ItemGrid : MonoBehaviour
             {
                 break;
             }
+
             var item = inventory.GetItemInSlot(i);
-            addToSlot(i, item.Item1, item.Item2);
+
+            if (item.Item2 != null)
+            {
+                addToSlot(i, item.Item1, item.Item2);
+            }
+            
         }
 
-        ItemSelected(0);
+        //ItemSelected(0);
+    }
+
+    private void FixedUpdate()
+    {
+        for (int i = 0; i < inventory.GetSlotCount(); i++)
+        {
+            if (i > ItemsToDisplay - 1)
+            {
+                break;
+            }
+            var item = inventory.GetItemInSlot(i);
+            if (item.Item2 != null)
+            {
+                addToSlot(i, item.Item1, item.Item2);
+            }
+
+        }
     }
 
 
     private void addToSlot(int slot, int quantity, ItemObject item)
     {
         Debug.Log("add to slot is called");
-
         // make child object of item slot
         // itemSlots[slot].
         // does not work...GameObject newItem = Instantiate(item.prefab,itemSlots[slot].transform, false);
-        GameObject newItem = Instantiate(itemInSlot,itemSlots[slot].transform);
-        newItem.GetComponent<UnityEngine.UI.Image>().sprite = item.prefab.GetComponent<SpriteRenderer>().sprite;
 
-        RectTransform rectTrans = newItem.GetComponent<RectTransform>();
 
-        rectTrans.localPosition = new Vector3(0,0,0);
-        rectTrans.localScale = new Vector3(0.9f, 0.9f, 0.9f);
-        
+        if (itemSlots[slot].transform.childCount == 0)
+        {
+            GameObject newItem = Instantiate(itemInSlot, itemSlots[slot].transform);
+            newItem.GetComponent<UnityEngine.UI.Image>().sprite = item.prefab.GetComponent<SpriteRenderer>().sprite;
+            RectTransform rectTrans = newItem.GetComponent<RectTransform>();
 
+            rectTrans.localPosition = new Vector3(0, 0, 0);
+            rectTrans.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+        }
 
     }
 

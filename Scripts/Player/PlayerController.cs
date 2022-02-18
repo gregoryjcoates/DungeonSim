@@ -107,9 +107,10 @@ public class PlayerController : MonoBehaviour
 
          Action();
         ToolBarSelection();
+        PlayerMenuOpenClose();
 
     }
-
+    // item/tool action
     private void Action()
     {
         if (Input.GetKeyDown("x") == true)
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
                 if (currTool != null)
                 {
                     GetComponent<TileTarget>().targetTile(dir, currTool.toolRange);
-                    heldItem.GetComponent<ToolAction>().Action(currTool.toolType, currTool.toolRange, currTool.toolPower, currTool.rank, dir, gameObject.transform.position);
+                    
                 }
             }
         }
@@ -131,8 +132,26 @@ public class PlayerController : MonoBehaviour
                 if (currTool !=null)
                 {
                     GetComponent<TileTarget>().RemoveTiles();
+                    heldItem.GetComponent<ToolAction>().Action(currTool.toolType, currTool.toolRange, currTool.toolPower, currTool.rank, dir, gameObject.transform.position);
                 }
                 
+            }
+        }
+    }
+
+    private void PlayerMenuOpenClose()
+    {
+        if (Input.GetKeyDown("q") == true)
+        {
+            if (playerMenu.activeSelf == true)
+            {
+                playerMenu.SetActive(false) ;
+                Time.timeScale = 1;
+            }
+            else
+            {
+                playerMenu.SetActive(true);
+                Time.timeScale = 0;
             }
         }
     }
@@ -181,44 +200,48 @@ public class PlayerController : MonoBehaviour
         int itemQuantity = 0;
 
         var item = playerInventory.GetItemInSlot(selectedSlot);
-        itemQuantity = item.Item1;
-        currItem = item.Item2;
+        if (item.Item2 != null)
+        {
+            itemQuantity = item.Item1;
+            currItem = item.Item2;
 
 
-        HeldItemSpawning(currItem);
-        Debug.Log("Current item is: " + currItem.name);
+            HeldItemSpawning(currItem);
+            Debug.Log("Current item is: " + currItem.name);
+        }
+   
     }
 
     // allows actions based on current item
     private void HeldItemSpawning(ItemObject currItem)
     {
-
-        // checks if the current item is still the same
-        if (currItem != previousItem)
+        if (currItem != null)
         {
-            Destroy(heldItem);
-
-            previousItem = currItem;
-
-            // if the current item is a tool spawn it in player's hands
-            if (currItem.type == ItemType.Tool)
+            // checks if the current item is still the same
+            if (currItem != previousItem)
             {
-                currTool = currItem as ToolItemObject;
-                HeldToolSpawn(currTool);
-            }
-            // if the item is not a tool make sure currTool is null
-            else
-            {
-                currTool = null;
-            }
-            //  Destroy(heldItem);
-            // heldItem = Instantiate(currItem.prefab, gameObject.transform, false);
-            //  heldItem.GetComponent<SpriteRenderer>().sortingOrder = 5;
+                Destroy(heldItem);
+
+                previousItem = currItem;
+
+                // if the current item is a tool spawn it in player's hands
+                if (currItem.type == ItemType.Tool)
+                {
+                    currTool = currItem as ToolItemObject;
+                    HeldToolSpawn(currTool);
+                }
+                // if the item is not a tool make sure currTool is null
+                else
+                {
+                    currTool = null;
+                }
+                //  Destroy(heldItem);
+                // heldItem = Instantiate(currItem.prefab, gameObject.transform, false);
+                //  heldItem.GetComponent<SpriteRenderer>().sortingOrder = 5;
 
 
+            }
         }
-
-
     }
 
 

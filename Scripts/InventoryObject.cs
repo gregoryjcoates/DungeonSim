@@ -23,11 +23,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = slotList.Count; i < invSize; i++)
         {
-
-
-                    slotList.Add(new InventorySlot(item, 1));
-                
-            
+            slotList.Add(new InventorySlot(null, 1));
         }
     }
     // adds item and item slot if needed

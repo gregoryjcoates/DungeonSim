@@ -23,7 +23,7 @@ public class MiningObject : ScriptableObject
 
   
 
-    public int Mine(int power, int rank)
+    public int Mine(int power, int rank) 
     {
         
         if (rank >= toolRankReq)
